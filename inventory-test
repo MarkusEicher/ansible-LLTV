@@ -1,6 +1,6 @@
-24.199.99.136
-24.199.99.137
-24.199.99.138
-24.199.99.140
-24.199.112.66
+24.199.99.136 apache_package=apache2 php_package=libapache2-mod-php
+24.199.99.137 apache_package=apache2 php_package=libapache2-mod-php
+24.199.99.138 apache_package=apache2 php_package=libapache2-mod-php
+24.199.99.140 apache_package=apache2 php_package=libapache2-mod-php
+24.199.112.66 apache_package=httpd php_package=php
 
