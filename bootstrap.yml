@@ -1,0 +1,44 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: install updates (CentOS)
+    tags: always
+    dnf:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+  - name: install updates (Ubuntu)
+    tags: always
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+    
+    
+- hosts: all
+  become: true
+  tasks:
+    
+  - name: create user mke
+    tags: always
+    user:
+      name: mke
+      groups: root
+      
+  - name: add ssh key for mke
+    tags: always
+    authorized_key:
+      user: mke
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKYMPXlOgad4Yo/RmEpu46jCNDyHge0R6mDzBp1ddC46 ansible-simple"
+            
+  - name: add sudoer file for mke
+    tags: always
+    copy:
+      src: sudoer_mke
+      dest: /etc/sudoers.d/mke
+      owner: root
+      group: root

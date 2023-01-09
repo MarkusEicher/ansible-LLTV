@@ -4,21 +4,32 @@
   become: true
   pre_tasks:
 
-  - name: install updates (CentOS)
+  - name: update repo cache (CentOS)
     tags: always
     dnf:
-      update_only: yes
       update_cache: yes
+    changed_when: false
     when: ansible_distribution == "CentOS"
 
-  - name: install updates (Ubuntu)
+  - name: update repo cache (Ubuntu)
     tags: always
     apt:
-      upgrade: dist
       update_cache: yes
+    changed_when: false
     when: ansible_distribution == "Ubuntu"
     
     
+- hosts: all
+  become: true
+  tasks:
+    
+  - name: add ssh key for mke
+    tags: always
+    authorized_key:
+      user: mke
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKYMPXlOgad4Yo/RmEpu46jCNDyHge0R6mDzBp1ddC46 ansible-simple"
+            
+      
 - hosts: workstations
   become: true
   tasks:
