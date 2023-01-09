@@ -59,6 +59,31 @@
       state: latest
     when: ansible_distribution == "CentOS"
     
+  - name: starting httpd service on CentOS servers
+    tags: centos,servicestart,httpd
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+    when: ansible_distribution == "CentOS"
+    
+  - name: change e-mail address for admin on CentOS
+    tags: apache,centos,httpd
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^ServerAdmin'
+      line: ServerAdmin hulk@hulk.net
+    when: ansible_distribution == "CentOS"
+    register: httpd
+    
+  - name: restart httpd after lineinfile change on CentOS
+    tags: apache,centos,httpd
+    service:
+      name: httpd
+      state: restarted
+    when: httpd.changed
+      
+    
   - name: copy default html file for site
     tags: apache,httpd,apache2,filecopytest
     copy:
