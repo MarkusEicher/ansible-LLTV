@@ -1,0 +1,5 @@
+- name: add ssh key for mke
+  tags: always
+  authorized_key:
+    user: mke
+    key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKYMPXlOgad4Yo/RmEpu46jCNDyHge0R6mDzBp1ddC46 ansible-simple"
